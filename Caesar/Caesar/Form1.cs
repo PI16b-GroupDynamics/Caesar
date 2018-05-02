@@ -12,6 +12,8 @@ namespace Caesar
 {
     public partial class Form1 : Form
     {
+        CaesarCodec Caesar = new CaesarCodec();
+
         public Form1()
         {
             InitializeComponent();
@@ -19,12 +21,12 @@ namespace Caesar
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            richTextBox2.Text = Caesar.Codeс(richTextBox1.Text, (int)numericUpDown1.Value);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)numericUpDown1.Value);
         }
     }
 }
