@@ -1,0 +1,19 @@
+The program is intended for Caesar the encryption and decryption of texts by using the example of the Caesar cipher.
+Text can be entered manually by the user to the appropriate controllers on the main form. Also
+the user is given the opportunity to upload text files to encrypt method of Caesar. 
+To do this, go to the menu item File-> Open to encrypt or File-> Open to decrypt.
+
+After a successful encryption/decryption, the user has the option to save the results of the work to a text file
+in the ad's it directory. To do this, go to menu item file Save or File encrypted >-> Save 
+transcribed. 
+
+In the menu item Settings is given the opportunity to change the interface language. Available in two languages: English and Russian.
+Also this possibility and maximal package of programs on the start screen. 
+
+Help menu item contains information about the program, about the authors, as well as guidance this guidance to the user.
+In addition to the decryption of texts with a known offset program provides an opportunity to break into the Caesar cipher when an unknown
+offset. To do this, download the text to decrypt and select "Hacking cipher".
+
+Using frequency analysis program will detect and display the assumed variant of the decrypted
+the text. In case of failure, the program will provide an opportunity for the user to explore all options for the decoded text when all
+possible offsets.

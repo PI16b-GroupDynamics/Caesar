@@ -3,3 +3,12 @@ Cryptography is a science and the art of encryption. At least it began from this
 digital signatures and many other elementary functions of security. 
 Cryptography comprises different directions of mathematics, theory of communication, 
 technical disciplines, what create the foundation for building data protection and hacking ciphers.
+There are many information encryption algorithms. The most famous from the ancient replacement code
+ is cipher of Caesar, which was named after Roman Emperor Guy Julius Caesar, who used it for 
+secret correspondence with his generals.Cipher of Caesar is one of the most studied in cryptography, 
+and it is very useful because it illustrates principles of modular arithmetic, 
+one of the mathematical bases of coded letters.
+This cipher works simple. Every letter in a message is changed by another that located
+in alphabet on the right or left from current letter. To decrypt a message like this we just need to know 
+the key.
+This prorgam will help you to encrypt and decrypt messages with Caesar cipher.

@@ -165,7 +165,7 @@ namespace Caesar
         {
             this.Close();
         }
-<<<<<<< HEAD
+
         
             public void Hacking()
             {
@@ -287,7 +287,7 @@ namespace Caesar
             }
         }
 
-        
+
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -299,7 +299,8 @@ namespace Caesar
                 MessageBox.Show("Word counting canceled.");
             else
                 MessageBox.Show("Finished counting words.");
-=======
+
+        }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -358,7 +359,9 @@ namespace Caesar
 
                 this.английскийToolStripMenuItem.Text = "Английский";
 
-                 this.Refresh();
+                this.checkBox1.Text = "Взлом шифра";
+
+                this.Refresh();
         }
 
         private void английскийToolStripMenuItem_Click(object sender, EventArgs e)
@@ -408,6 +411,8 @@ namespace Caesar
 
             this.английскийToolStripMenuItem.Text = "English";
 
+            this.checkBox1.Text = "Hack cipher";
+
             this.Refresh();
         }
 
@@ -451,7 +456,7 @@ namespace Caesar
                 Form3 f = new Form3(0, 3);
                 f.Show();
             }
->>>>>>> settings
+
         }
     }
 

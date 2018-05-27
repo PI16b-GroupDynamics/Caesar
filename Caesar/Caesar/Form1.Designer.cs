@@ -52,14 +52,14 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-<<<<<<< HEAD
+
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-=======
+
             this.языкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.английскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
->>>>>>> settings
+
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -257,7 +257,7 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Подсказка";
             // 
-<<<<<<< HEAD
+
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -275,7 +275,7 @@
             this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-=======
+
             // языкToolStripMenuItem
             // 
             this.языкToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -298,7 +298,7 @@
             this.английскийToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
             this.английскийToolStripMenuItem.Text = "Английский";
             this.английскийToolStripMenuItem.Click += new System.EventHandler(this.английскийToolStripMenuItem_Click);
->>>>>>> settings
+
             // 
             // Form1
             // 
@@ -353,14 +353,14 @@
         private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
-<<<<<<< HEAD
+
         private System.Windows.Forms.CheckBox checkBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-=======
+
         private System.Windows.Forms.ToolStripMenuItem языкToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem русскийToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem английскийToolStripMenuItem;
->>>>>>> settings
+
     }
 }
 
