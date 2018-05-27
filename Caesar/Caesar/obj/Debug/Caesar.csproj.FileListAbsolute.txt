@@ -18,3 +18,5 @@ F:\git\Caesar\Caesar\Caesar\obj\Debug\Caesar.pdb
 F:\git\Caesar\Caesar\Caesar\bin\Debug\Caesar.exe.config
 F:\git\Caesar\Caesar\Caesar\bin\Debug\Caesar.exe
 F:\git\Caesar\Caesar\Caesar\bin\Debug\Caesar.pdb
+F:\git\Caesar\Caesar\Caesar\obj\Debug\Caesar.Form2.resources
+F:\git\Caesar\Caesar\Caesar\obj\Debug\Caesar.Form3.resources
