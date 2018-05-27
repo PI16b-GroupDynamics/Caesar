@@ -1,0 +1,5 @@
+Cryptography is a science and the art of encryption. At least it began from this.
+ Nowadays concept of cryptography has been widen and it includes authentication, 
+digital signatures and many other elementary functions of security. 
+Cryptography comprises different directions of mathematics, theory of communication, 
+technical disciplines, what create the foundation for building data protection and hacking ciphers.
