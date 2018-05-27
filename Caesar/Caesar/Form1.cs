@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace Caesar
 {
     public partial class Form1 : Form
     {
         CaesarCodec Caesar = new CaesarCodec();
-
+        string s;
         public Form1()
         {
             InitializeComponent();
@@ -46,7 +47,7 @@ namespace Caesar
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string s = string.Empty;
+            s = string.Empty;
             s = richTextBox2.Text;
             if (s.Length > 1000000)
             {
@@ -58,8 +59,20 @@ namespace Caesar
                 выходToolStripMenuItem.Enabled = false;
                 настройкиToolStripMenuItem.Enabled = false;
                 справкаToolStripMenuItem.Enabled = false;
-                richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)numericUpDown1.Value);
-                MessageBox.Show("Успешно!");
+                if (checkBox1.Checked == true)
+                {
+                    if (backgroundWorker1.IsBusy != true)
+                    {
+                        backgroundWorker1.RunWorkerAsync();
+                    }
+                    //Hacking();
+                }
+                else
+                {
+                    richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)numericUpDown1.Value);
+                    MessageBox.Show("Успешно!");
+                }
+
                 файлToolStripMenuItem.Enabled = true;
                 выходToolStripMenuItem.Enabled = true;
                 настройкиToolStripMenuItem.Enabled = true;
@@ -83,7 +96,7 @@ namespace Caesar
             }
             else
             {
-            // читаем файл в строку
+                // читаем файл в строку
                 string fileText = File.ReadAllText(filename, Encoding.Default);
                 richTextBox1.Text = fileText;
                 MessageBox.Show("Файл открыт");
@@ -152,5 +165,142 @@ namespace Caesar
         {
             this.Close();
         }
+        
+            public void Hacking()
+            {
+                s = s.ToLower();
+                string freqrus = "оаеинтрслвкпмудяыьзбгйчюхжшцщфэъ";
+                string alf = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+                Dictionary<string, int> freq = new Dictionary<string, int>();
+                Dictionary<int, int> shift = new Dictionary<int, int>();
+                for (int i = 0; i < s.Length; i++)
+                {
+                    string newl = s.Substring(i, 1);
+                    int newpos = alf.IndexOf(newl);
+                    if (newpos != -1)
+                    {
+                        if (freq.ContainsKey(newl))
+                        {
+                            freq[newl]++;
+                        }
+                        else
+                        {
+                            freq.Add(newl, 1);
+                        }
+                    }
+                }
+
+
+                for (int i = 0; i < freq.LongCount() - 1; i++)
+                {
+                    for (int j = 0; j < freq.LongCount() - i - 1; j++)
+                    {
+                        if (freq.ElementAt(j).Value <= freq.ElementAt(j + 1).Value)
+                        {
+                            // меняем элементы местами
+                            var temp = freq[freq.ElementAt(j).Key];
+                            freq[freq.ElementAt(j).Key] = freq[freq.ElementAt(j + 1).Key];
+                            freq[freq.ElementAt(j + 1).Key] = temp;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < freq.LongCount() - 1; i++)
+                {
+                    string emperical = freqrus.Substring(i, 1);
+                    string theoretical = freq.ElementAt(i).Key;
+                    int count = 0;
+                    for (int p = 0; p < alf.Length; p++)
+                    {
+                        if (alf.Substring(p, 1) == emperical)
+                        {
+                            while (alf.Substring(p, 1) != theoretical)
+                            {
+                                p++;
+                                count++;
+                            }
+                            break;
+                        }
+                        if (alf.Substring(p, 1) == theoretical)
+                        {
+                            while (alf.Substring(p, 1) != emperical)
+                            {
+                                p++;
+                                count++;
+                            }
+                            break;
+                        }
+                    }
+                    if (shift.ContainsKey(count))
+                    {
+                        shift[count]++;
+                    }
+                    else
+                    {
+                        shift.Add(count, 1);
+                    }
+                }
+
+
+                for (int i = 0; i < shift.LongCount() - 1; i++)
+                {
+                    for (int j = 0; j < shift.LongCount() - i - 1; j++)
+                    {
+                        if (shift.ElementAt(j).Value <= shift.ElementAt(j + 1).Value)
+                        {
+                            // меняем элементы местами
+                            var temp = shift[shift.ElementAt(j).Key];
+                            shift[shift.ElementAt(j).Key] = shift[shift.ElementAt(j + 1).Key];
+                            shift[shift.ElementAt(j + 1).Key] = temp;
+                        }
+                    }
+                }
+                int key = shift.ElementAt(0).Key;
+
+                richTextBox1.Invoke(new Action(() => { richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key); }));
+                //richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key);
+                MessageBox.Show("Взлом! Ключ: " + key);
+            }
+        
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Do not access the form's BackgroundWorker reference directly.
+            // Instead, use the reference provided by the sender parameter.
+            BackgroundWorker bw = sender as BackgroundWorker;
+
+            // Extract the argument.
+            // Start the time-consuming operation.
+            
+            //e.Result = Hacking();
+
+            // If the operation was canceled by the user, 
+            // set the DoWorkEventArgs.Cancel property to true.
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                Hacking();
+            }
+        }
+
+        
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // This event handler is called when the background thread finishes. 
+            // This method runs on the main thread. 
+            if (e.Error != null)
+                MessageBox.Show("Error: " + e.Error.Message);
+            else if (e.Cancelled)
+                MessageBox.Show("Word counting canceled.");
+            else
+                MessageBox.Show("Finished counting words.");
+        }
     }
+
+       
+    
 }
