@@ -39,6 +39,9 @@
             this.открытьНаРасшифровкуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьРасшифрованныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.языкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.английскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,14 +55,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-
-            this.языкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.английскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -163,6 +159,29 @@
             this.настройкиToolStripMenuItem.Text = "Настройки";
             this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
             // 
+            // языкToolStripMenuItem
+            // 
+            this.языкToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.русскийToolStripMenuItem,
+            this.английскийToolStripMenuItem});
+            this.языкToolStripMenuItem.Name = "языкToolStripMenuItem";
+            this.языкToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.языкToolStripMenuItem.Text = "Язык";
+            // 
+            // русскийToolStripMenuItem
+            // 
+            this.русскийToolStripMenuItem.Name = "русскийToolStripMenuItem";
+            this.русскийToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.русскийToolStripMenuItem.Text = "Русский";
+            this.русскийToolStripMenuItem.Click += new System.EventHandler(this.русскийToolStripMenuItem_Click);
+            // 
+            // английскийToolStripMenuItem
+            // 
+            this.английскийToolStripMenuItem.Name = "английскийToolStripMenuItem";
+            this.английскийToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.английскийToolStripMenuItem.Text = "Английский";
+            this.английскийToolStripMenuItem.Click += new System.EventHandler(this.английскийToolStripMenuItem_Click);
+            // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -257,7 +276,6 @@
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTip1.ToolTipTitle = "Подсказка";
             // 
-
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -267,38 +285,8 @@
             this.checkBox1.Size = new System.Drawing.Size(118, 21);
             this.checkBox1.TabIndex = 9;
             this.checkBox1.Text = "Взлом шифра";
+            this.toolTip1.SetToolTip(this.checkBox1, "Взлом происходит только на русском языке");
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-
-            // языкToolStripMenuItem
-            // 
-            this.языкToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.русскийToolStripMenuItem,
-            this.английскийToolStripMenuItem});
-            this.языкToolStripMenuItem.Name = "языкToolStripMenuItem";
-            this.языкToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
-            this.языкToolStripMenuItem.Text = "Язык";
-            // 
-            // русскийToolStripMenuItem
-            // 
-            this.русскийToolStripMenuItem.Name = "русскийToolStripMenuItem";
-            this.русскийToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
-            this.русскийToolStripMenuItem.Text = "Русский";
-            this.русскийToolStripMenuItem.Click += new System.EventHandler(this.русскийToolStripMenuItem_Click);
-            // 
-            // английскийToolStripMenuItem
-            // 
-            this.английскийToolStripMenuItem.Name = "английскийToolStripMenuItem";
-            this.английскийToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
-            this.английскийToolStripMenuItem.Text = "Английский";
-            this.английскийToolStripMenuItem.Click += new System.EventHandler(this.английскийToolStripMenuItem_Click);
-
             // 
             // Form1
             // 
@@ -355,7 +343,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
 
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
 
         private System.Windows.Forms.ToolStripMenuItem языкToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem русскийToolStripMenuItem;

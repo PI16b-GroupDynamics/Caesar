@@ -21,7 +21,6 @@ namespace Caesar
             InitializeComponent();
             this.KeyPreview = true;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             string s = string.Empty;
@@ -61,11 +60,7 @@ namespace Caesar
                 справкаToolStripMenuItem.Enabled = false;
                 if (checkBox1.Checked == true)
                 {
-                    if (backgroundWorker1.IsBusy != true)
-                    {
-                        backgroundWorker1.RunWorkerAsync();
-                    }
-                    //Hacking();
+                    Hacking();
                 }
                 else
                 {
@@ -166,141 +161,116 @@ namespace Caesar
             this.Close();
         }
 
-        
-            public void Hacking()
+
+        public void Hacking()
+        {
+            s = s.ToLower();
+            string freqrus = "оаеинтрслвкпмудяыьзбгйчюхжшцщфэъ";
+            string alf = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+            Dictionary<string, int> freq = new Dictionary<string, int>();
+            Dictionary<int, int> shift = new Dictionary<int, int>();
+            for (int i = 0; i < s.Length; i++)
             {
-                s = s.ToLower();
-                string freqrus = "оаеинтрслвкпмудяыьзбгйчюхжшцщфэъ";
-                string alf = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-                Dictionary<string, int> freq = new Dictionary<string, int>();
-                Dictionary<int, int> shift = new Dictionary<int, int>();
-                for (int i = 0; i < s.Length; i++)
+                string newl = s.Substring(i, 1);
+                int newpos = alf.IndexOf(newl);
+                if (newpos != -1)
                 {
-                    string newl = s.Substring(i, 1);
-                    int newpos = alf.IndexOf(newl);
-                    if (newpos != -1)
+                    if (freq.ContainsKey(newl))
                     {
-                        if (freq.ContainsKey(newl))
-                        {
-                            freq[newl]++;
-                        }
-                        else
-                        {
-                            freq.Add(newl, 1);
-                        }
-                    }
-                }
-
-
-                for (int i = 0; i < freq.LongCount() - 1; i++)
-                {
-                    for (int j = 0; j < freq.LongCount() - i - 1; j++)
-                    {
-                        if (freq.ElementAt(j).Value <= freq.ElementAt(j + 1).Value)
-                        {
-                            // меняем элементы местами
-                            var temp = freq[freq.ElementAt(j).Key];
-                            freq[freq.ElementAt(j).Key] = freq[freq.ElementAt(j + 1).Key];
-                            freq[freq.ElementAt(j + 1).Key] = temp;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < freq.LongCount() - 1; i++)
-                {
-                    string emperical = freqrus.Substring(i, 1);
-                    string theoretical = freq.ElementAt(i).Key;
-                    int count = 0;
-                    for (int p = 0; p < alf.Length; p++)
-                    {
-                        if (alf.Substring(p, 1) == emperical)
-                        {
-                            while (alf.Substring(p, 1) != theoretical)
-                            {
-                                p++;
-                                count++;
-                            }
-                            break;
-                        }
-                        if (alf.Substring(p, 1) == theoretical)
-                        {
-                            while (alf.Substring(p, 1) != emperical)
-                            {
-                                p++;
-                                count++;
-                            }
-                            break;
-                        }
-                    }
-                    if (shift.ContainsKey(count))
-                    {
-                        shift[count]++;
+                        freq[newl]++;
                     }
                     else
                     {
-                        shift.Add(count, 1);
+                        freq.Add(newl, 1);
                     }
                 }
+            }
 
 
-                for (int i = 0; i < shift.LongCount() - 1; i++)
+            for (int i = 0; i < freq.LongCount() - 1; i++)
+            {
+                for (int j = 0; j < freq.LongCount() - i - 1; j++)
                 {
-                    for (int j = 0; j < shift.LongCount() - i - 1; j++)
+                    if (freq.ElementAt(j).Value <= freq.ElementAt(j + 1).Value)
                     {
-                        if (shift.ElementAt(j).Value <= shift.ElementAt(j + 1).Value)
-                        {
-                            // меняем элементы местами
-                            var temp = shift[shift.ElementAt(j).Key];
-                            shift[shift.ElementAt(j).Key] = shift[shift.ElementAt(j + 1).Key];
-                            shift[shift.ElementAt(j + 1).Key] = temp;
-                        }
+                        // меняем элементы местами
+                        var temp = freq[freq.ElementAt(j).Key];
+                        freq[freq.ElementAt(j).Key] = freq[freq.ElementAt(j + 1).Key];
+                        freq[freq.ElementAt(j + 1).Key] = temp;
                     }
                 }
-                int key = shift.ElementAt(0).Key;
-
-                richTextBox1.Invoke(new Action(() => { richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key); }));
-                //richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key);
-                MessageBox.Show("Взлом! Ключ: " + key);
             }
-        
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            // Do not access the form's BackgroundWorker reference directly.
-            // Instead, use the reference provided by the sender parameter.
-            BackgroundWorker bw = sender as BackgroundWorker;
-
-            // Extract the argument.
-            // Start the time-consuming operation.
-            
-            //e.Result = Hacking();
-
-            // If the operation was canceled by the user, 
-            // set the DoWorkEventArgs.Cancel property to true.
-            if (bw.CancellationPending)
+            for (int i = 0; i < freq.LongCount() - 1; i++)
             {
-                e.Cancel = true;
+                string emperical = freqrus.Substring(i, 1);
+                string theoretical = freq.ElementAt(i).Key;
+                int count = 0;
+                for (int p = 0; p < alf.Length; p++)
+                {
+                    if (alf.Substring(p, 1) == emperical)
+                    {
+                        while (alf.Substring(p, 1) != theoretical)
+                        {
+                            p++;
+                            count++;
+                        }
+                        break;
+                    }
+                    if (alf.Substring(p, 1) == theoretical)
+                    {
+                        while (alf.Substring(p, 1) != emperical)
+                        {
+                            p++;
+                            count++;
+                        }
+                        break;
+                    }
+                }
+                if (shift.ContainsKey(count))
+                {
+                    shift[count]++;
+                }
+                else
+                {
+                    shift.Add(count, 1);
+                }
             }
-            else
+
+
+            for (int i = 0; i < shift.LongCount() - 1; i++)
             {
-                Hacking();
+                for (int j = 0; j < shift.LongCount() - i - 1; j++)
+                {
+                    if (shift.ElementAt(j).Value <= shift.ElementAt(j + 1).Value)
+                    {
+                        // меняем элементы местами
+                        var temp = shift[shift.ElementAt(j).Key];
+                        shift[shift.ElementAt(j).Key] = shift[shift.ElementAt(j + 1).Key];
+                        shift[shift.ElementAt(j + 1).Key] = temp;
+                    }
+                }
             }
+            int key = 3;
+            if (shift.Count != 0)
+            {
+                key = shift.ElementAt(0).Key;
+            }
+
+            //richTextBox1.Invoke(new Action(() => { richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key); }));
+            //this.Invoke((MethodInvoker)delegate ()
+            // {
+            richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key);
+            // });
+            MessageBox.Show("Взлом! Ключ: " + key);
         }
 
 
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // This event handler is called when the background thread finishes. 
-            // This method runs on the main thread. 
-            if (e.Error != null)
-                MessageBox.Show("Error: " + e.Error.Message);
-            else if (e.Cancelled)
-                MessageBox.Show("Word counting canceled.");
-            else
-                MessageBox.Show("Finished counting words.");
 
-        }
+
+
+
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -314,54 +284,54 @@ namespace Caesar
 
         private void русскийToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                this.button1.Text = "Зашифровать";
-                this.toolTip1.SetToolTip(this.button1, "Зашифровать методом Цезаря");
+            this.button1.Text = "Зашифровать";
+            this.toolTip1.SetToolTip(this.button1, "Зашифровать методом Цезаря");
 
-                this.button2.Text = "Расшифровать";
-                this.toolTip1.SetToolTip(this.button2, "Расшифровать текст, зашифрованный методом Цезаря");
+            this.button2.Text = "Расшифровать";
+            this.toolTip1.SetToolTip(this.button2, "Расшифровать текст, зашифрованный методом Цезаря");
 
 
-                this.файлToolStripMenuItem.Text = "Файл";
+            this.файлToolStripMenuItem.Text = "Файл";
 
-                this.открытьToolStripMenuItem.Text = "Открыть на шифрование";
+            this.открытьToolStripMenuItem.Text = "Открыть на шифрование";
 
-                this.сохранитьКакToolStripMenuItem.Text = "Сохранить зашифрованный";
+            this.сохранитьКакToolStripMenuItem.Text = "Сохранить зашифрованный";
 
-                this.открытьНаРасшифровкуToolStripMenuItem.Text = "Открыть на расшифровку";
+            this.открытьНаРасшифровкуToolStripMenuItem.Text = "Открыть на расшифровку";
 
-                this.сохранитьРасшифрованныйToolStripMenuItem.Text = "Сохранить расшифрованный";
+            this.сохранитьРасшифрованныйToolStripMenuItem.Text = "Сохранить расшифрованный";
 
-                this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Text = "Настройки";
 
-                this.справкаToolStripMenuItem.Text = "Справка";
+            this.справкаToolStripMenuItem.Text = "Справка";
 
-                this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.оПрограммеToolStripMenuItem.Text = "О программе";
 
-                this.помощьToolStripMenuItem.Text = "Помощь";
+            this.помощьToolStripMenuItem.Text = "Помощь";
 
-                this.обАвторахToolStripMenuItem.Text = "Об авторах";
+            this.обАвторахToolStripMenuItem.Text = "Об авторах";
 
-                this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Text = "Выход";
 
-                this.label1.Text = "Обычный текст";
+            this.label1.Text = "Обычный текст";
 
-                this.label2.Text = "Зашифрованный текст";
+            this.label2.Text = "Зашифрованный текст";
 
-                this.label3.Text = "Ключ";
+            this.label3.Text = "Ключ";
 
-                this.toolTip1.SetToolTip(this.numericUpDown1, "Размер смещения для шифрования/дешифрования");
+            this.toolTip1.SetToolTip(this.numericUpDown1, "Размер смещения для шифрования/дешифрования");
 
-                this.toolTip1.ToolTipTitle = "Подсказка";
+            this.toolTip1.ToolTipTitle = "Подсказка";
 
-                this.языкToolStripMenuItem.Text = "Язык";
+            this.языкToolStripMenuItem.Text = "Язык";
 
-                this.русскийToolStripMenuItem.Text = "Русский";
+            this.русскийToolStripMenuItem.Text = "Русский";
 
-                this.английскийToolStripMenuItem.Text = "Английский";
+            this.английскийToolStripMenuItem.Text = "Английский";
 
-                this.checkBox1.Text = "Взлом шифра";
+            this.checkBox1.Text = "Взлом шифра";
 
-                this.Refresh();
+            this.Refresh();
         }
 
         private void английскийToolStripMenuItem_Click(object sender, EventArgs e)
@@ -419,13 +389,14 @@ namespace Caesar
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            if (this.button1.Text == "Encrypt") {
-                Form3 f = new Form3(1,1);
+            if (this.button1.Text == "Encrypt")
+            {
+                Form3 f = new Form3(1, 1);
                 f.Show();
             }
             else
             {
-                Form3 f = new Form3(0,1);
+                Form3 f = new Form3(0, 1);
                 f.Show();
             }
         }
@@ -434,12 +405,12 @@ namespace Caesar
         {
             if (this.button1.Text == "Encrypt")
             {
-                Form3 f = new Form3(1,2);
+                Form3 f = new Form3(1, 2);
                 f.Show();
             }
             else
             {
-                Form3 f = new Form3(0,2);
+                Form3 f = new Form3(0, 2);
                 f.Show();
             }
         }
@@ -460,6 +431,6 @@ namespace Caesar
         }
     }
 
-       
-    
+
+
 }
