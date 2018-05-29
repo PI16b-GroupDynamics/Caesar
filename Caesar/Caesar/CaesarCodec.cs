@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Caesar
 {
-    class CaesarCodec:List<Strip>
+    class CaesarCodec : List<Strip>
     {
+        public string r;
+        public string text;
+        public int key;
+        public bool status;
+
         public CaesarCodec()
         { //формирование коллекций лент 
             this.Add(new Strip("абвгдеёжзийклмнопрстуфхцчшщъыьэюя"));
@@ -18,7 +25,7 @@ namespace Caesar
             this.Add(new Strip("!\"#$%^&*()+=-_'?.,|/`~№:;@[]{}"));
         }
 
-        public string Codeс(string text, int key) //кодирование и декодирование в зависимости от знака ключа 
+        public void Codeс() //кодирование и декодирование в зависимости от знака ключа 
         {
             string result = "", tmp = "";
             for (int i = 0; i < text.Length; i++)
@@ -34,7 +41,23 @@ namespace Caesar
                 }
                 if (tmp == "") result += text.Substring(i, 1); //незнакомый символ оставляю без изменений 
             }
-            return result;
+            r = result;
+
+
+            if (status == true)
+            {
+                (Application.OpenForms[1] as Form1).richTextBox2.Invoke(new Action(() => { (Application.OpenForms[1] as Form1).richTextBox2.Text = r; }));
+            }
+            else
+            {
+                (Application.OpenForms[1] as Form1).richTextBox1.Invoke(new Action(() => { (Application.OpenForms[1] as Form1).richTextBox1.Text = r; }));
+            }
+            (Application.OpenForms[1] as Form1).menuStrip1.Invoke(new Action(() => { (Application.OpenForms[1] as Form1).menuStrip1.Enabled = true; }));
+            (Application.OpenForms[1] as Form1).button1.Invoke(new Action(() => { (Application.OpenForms[1] as Form1).button1.Enabled = true; }));
+            (Application.OpenForms[1] as Form1).button2.Invoke(new Action(() => { (Application.OpenForms[1] as Form1).button2.Enabled = true; }));
+
+            MessageBox.Show("Успешно!");
+
         }
     }
 }

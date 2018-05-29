@@ -16,6 +16,11 @@ namespace Caesar
     {
         CaesarCodec Caesar = new CaesarCodec();
         string s;
+        int Key;
+        Thread Thr;
+        Thread Thread1;
+        Thread Thread2;
+        Thread Thread3;
         public Form1()
         {
             InitializeComponent();
@@ -24,23 +29,23 @@ namespace Caesar
         private void button1_Click(object sender, EventArgs e)
         {
             string s = string.Empty;
-            s = richTextBox2.Text;
+            s = richTextBox1.Text;
             if (s.Length > 1000000)
             {
                 MessageBox.Show("Количество кодируемых символов не должно превышать 1000000!");
             }
             else
             {
-                файлToolStripMenuItem.Enabled = false;
-                выходToolStripMenuItem.Enabled = false;
-                настройкиToolStripMenuItem.Enabled = false;
-                справкаToolStripMenuItem.Enabled = false;
-                richTextBox2.Text = Caesar.Codeс(richTextBox1.Text, (int)numericUpDown1.Value);
-                MessageBox.Show("Успешно!");
-                файлToolStripMenuItem.Enabled = true;
-                выходToolStripMenuItem.Enabled = true;
-                настройкиToolStripMenuItem.Enabled = true;
-                справкаToolStripMenuItem.Enabled = true;
+                menuStrip1.Enabled = false;
+                button1.Enabled = false;
+                button2.Enabled = false;
+
+                Caesar.text = s;
+                Caesar.key = (int)numericUpDown1.Value;
+                Caesar.status = true;
+                Thr = new Thread(Caesar.Codeс);
+                Thr.IsBackground = true;
+                Thr.Start();
             }
         }
 
@@ -54,24 +59,35 @@ namespace Caesar
             }
             else
             {
-                файлToolStripMenuItem.Enabled = false;
-                выходToolStripMenuItem.Enabled = false;
-                настройкиToolStripMenuItem.Enabled = false;
-                справкаToolStripMenuItem.Enabled = false;
+                menuStrip1.Enabled = false;
+                button1.Enabled = false;
+                button2.Enabled = false;
+                Caesar.text = s;
+                Caesar.key = -(int)numericUpDown1.Value;
+                Caesar.status = false;
+
+
                 if (checkBox1.Checked == true)
                 {
-                    Hacking();
+                    Thread1 = new Thread(Hacking);
+                    Thread1.IsBackground = true;
+                    Thread1.Start();
+
+
+                    Caesar.key = -Key;
+                    Thread2 = new Thread(Caesar.Codeс);
+                    Thread2.IsBackground = true;
+                    Thread2.Start();
+
                 }
                 else
                 {
-                    richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)numericUpDown1.Value);
-                    MessageBox.Show("Успешно!");
+
+                    Thread3 = new Thread(Caesar.Codeс);
+                    Thread3.IsBackground = true;
+                    Thread3.Start();
                 }
 
-                файлToolStripMenuItem.Enabled = true;
-                выходToolStripMenuItem.Enabled = true;
-                настройкиToolStripMenuItem.Enabled = true;
-                справкаToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -251,18 +267,13 @@ namespace Caesar
                     }
                 }
             }
-            int key = 3;
+            Key = 3;
             if (shift.Count != 0)
             {
-                key = shift.ElementAt(0).Key;
+                Key = shift.ElementAt(0).Key;
             }
 
-            //richTextBox1.Invoke(new Action(() => { richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key); }));
-            //this.Invoke((MethodInvoker)delegate ()
-            // {
-            richTextBox1.Text = Caesar.Codeс(richTextBox2.Text, -(int)key);
-            // });
-            MessageBox.Show("Взлом! Ключ: " + key);
+            MessageBox.Show("Взлом! Ключ: " + Key);
         }
 
 
@@ -330,6 +341,7 @@ namespace Caesar
             this.английскийToolStripMenuItem.Text = "Английский";
 
             this.checkBox1.Text = "Взлом шифра";
+            this.toolTip1.SetToolTip(this.checkBox1, "Взлом шифра происходит только на русском языке");
 
             this.Refresh();
         }
@@ -382,6 +394,7 @@ namespace Caesar
             this.английскийToolStripMenuItem.Text = "English";
 
             this.checkBox1.Text = "Hack cipher";
+            this.toolTip1.SetToolTip(this.checkBox1, "Hacking the cipher is only in Russian");
 
             this.Refresh();
         }
@@ -428,6 +441,29 @@ namespace Caesar
                 f.Show();
             }
 
+        }
+
+        private void отменаToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Thr != null)
+            {
+                Thr.Abort();
+            }
+            if (Thread1 != null)
+            {
+                Thread1.Abort();
+            }
+            if (Thread2 != null)
+            {
+                Thread2.Abort();
+            }
+            if (Thread3 != null)
+            {
+                Thread3.Abort();
+            }
+            menuStrip1.Enabled = true;
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
     }
 
